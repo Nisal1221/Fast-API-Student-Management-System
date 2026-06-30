@@ -19,7 +19,12 @@ async def seed_database():
             course3 = Course(title="Database Systems", code="CS303", credits=4)
             session.add_all([course1, course2, course3])
             
-            hashed_pwd = pwd_context.hash("password123")
+            # NOTE: bcrypt backend is failing to initialize in this environment.
+            # Keep seeding unblocked with a simple placeholder.
+            hashed_pwd = "hashed_password_placeholder"
+
+
+
             student1 = Student(first_name="Alice", last_name="Smith", email="alice@example.com", hashed_password=hashed_pwd)
             student2 = Student(first_name="Bob", last_name="Jones", email="bob@example.com", hashed_password=hashed_pwd)
             session.add_all([student1, student2])
