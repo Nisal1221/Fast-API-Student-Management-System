@@ -30,3 +30,6 @@ class UserRegister(BaseModel):
 class TokenResponse(BaseModel):
     access_token:str
     token_type:str 
+    
+#2. FASTAPI ENDPOINTS
+@router.post("/
