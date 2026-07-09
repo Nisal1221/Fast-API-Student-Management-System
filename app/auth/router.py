@@ -1,8 +1,8 @@
 from datetime import timedelta
 from fastapi import APIRouter , Depends ,HTTTPexception , status
-from fastaoi.security import OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
 from pydantic importBasemodel , EmailStr
-from aqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
 from app.database import get_db
@@ -32,4 +32,6 @@ class TokenResponse(BaseModel):
     token_type:str 
     
 #2. FASTAPI ENDPOINTS
-@router.post("/
+@router.post("/register",status_code=status.HTTP_201_CREATED, response_model=TokenResponse)
+async def register_student(user_data: UserRegister , db: asyncSession = Depends(get_db)):
+    
