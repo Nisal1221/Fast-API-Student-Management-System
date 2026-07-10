@@ -34,4 +34,9 @@ class TokenResponse(BaseModel):
 #2. FASTAPI ENDPOINTS
 @router.post("/register",status_code=status.HTTP_201_CREATED, response_model=TokenResponse)
 async def register_student(user_data: UserRegister , db: asyncSession = Depends(get_db)):
+    """
+    Registers a new student, hashes their password, and immediately logs them in 
+    by returning a valid JWT access token.to Depends(get_db).
     
+    """
+    query = await db.
