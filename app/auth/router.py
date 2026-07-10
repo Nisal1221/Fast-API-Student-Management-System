@@ -39,4 +39,44 @@ async def register_student(user_data: UserRegister , db: asyncSession = Depends(
     by returning a valid JWT access token.to Depends(get_db).
     
     """
-    query = await db.
+    query = await db.execute(select(Student).where(Student.email == user_data.email))
+    excisting_user = query.scalars().first()
+    
+    if excisting_user:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Email already registered."
+            )
+    
+    #password hashing & save new user to the database
+    
+    hashed_pwd = hash_password(user_data.password)
+    new_student = Student(
+        first_name=user_data.first_name,
+        last_name=user_data.last_name,
+        email=user_data.email,
+        hashed_password=hashed_pwd
+    )
+    
+    db.add(new_student)
+    await db.commit()
+    await db.refresh(new_student)
+    
+    #Auto loging the user post reg
+    
+    access_token = create_access_token(data={"sub":new_student.email})
+    return{"access_token": access_token, "token_type":"bearer"}
+
+@router.post("/login", response_model=TokoenResponse)
+async def login_student(
+    from_data:OAuth2PasswordRequestForm = Depends(),
+    db: AsyncSession = Depends(get_db)
+): 
+    """
+    Authenticates a student using standerd OAuth2password flow. If the credentials are valid, returns a JWT access token if credintials match.
+    """
+    #fetch the user from the database
+    
+
+    
+        
