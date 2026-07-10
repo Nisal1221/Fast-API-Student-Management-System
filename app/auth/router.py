@@ -76,6 +76,28 @@ async def login_student(
     Authenticates a student using standerd OAuth2password flow. If the credentials are valid, returns a JWT access token if credintials match.
     """
     #fetch the user from the database
+    query = await db.execute(select(Student).where(Student.email == form_data.username))
+    student=query.scalars().first()
+    
+## Secure practice:
+
+invalid_credintial_exception= HTTPException(
+    status_code=status.HTTP_401_UNAUTHORIZED,
+    detail="Incorrect email or password!"
+    headers={"www-Authenticate": "Barrier"},
+)
+
+if not student or not verify_password(from_data.password,student.hashed_password):
+    raise invalid_credintial_exception
+
+# Generate and return token
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": student.email}, 
+        expires_delta=access_token_expires
+    )
+    
+    return {"access_token": access_token, "token_type": "bearer"}
     
 
     
