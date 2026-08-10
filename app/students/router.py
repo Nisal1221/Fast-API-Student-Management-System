@@ -1,6 +1,6 @@
-from fastapi import APIRrouter,Depends,HTTPException,status
+from fastapi import APIRouter,Depends,HTTPException,status
 from sqlalchemy.ext.asyncio import AsyncSession
-from squlalchemy.future import select
+from sqlalchemy.future import select
 from typing import List
 
 from app.database import get_db
@@ -8,7 +8,7 @@ from app.students.models import Student
 from app.students.schemas import StudentResponse,StudentUpdate
 from app.auth.utils import get_current_user
 
-router=APIRrouter(
+router=APIRouter(
     prefix="/students",
     tags=["Students"]
 )

@@ -9,6 +9,16 @@ class StudentBase(BaseModel):
     last_name:str
     email:EmailStr
     
+    
+#response schema for reading student data
+
+class StudentResponse(StudentBase):
+    id:int
+    created_at:datetime
+    
+    class Config:
+        orm_mode=True
+    
 #schema for updating a student record
 
 class StudentUpdate(BaseModel):
