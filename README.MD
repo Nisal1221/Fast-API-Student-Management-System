@@ -54,49 +54,10 @@ uvicorn app.main:app --reload
 Interactive API documentation available at http://127.0.0.1:8000/docs.
 
 Run via Docker Compose
-Bash
+
 docker-compose up --build
+
 Run Test Suite
-Bash
+
 python -m pytest
 
----
-
-**2. Update `requirements.txt`**
-
-Capture exact versions with your virtual environment activated:
-
-```powershell
-pip freeze > requirements.txt
-Verify that development artifacts (like local wheel caches) aren't cluttering the file. The core entries are:
-
-fastapi
-
-uvicorn[standard]
-
-sqlalchemy
-
-aiosqlite
-
-asyncpg
-
-pydantic
-
-pydantic-settings
-
-python-jose[cryptography]
-
-passlib[bcrypt]
-
-pytest
-
-pytest-asyncio
-
-httpx
-
-3. Commit and Push to GitHub
-
-PowerShell
-git add .
-git commit -m "feat: complete student management API with async CRUD, JWT auth, and clean test suite"
-git push origin main
