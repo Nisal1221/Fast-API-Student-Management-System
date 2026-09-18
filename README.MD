@@ -36,7 +36,7 @@ Quickstart
 Local Setup
 Bash
 # Clone repository
-git clone <YOUR_REPO_URL>
+git clone https://github.com/Nisal1221/Fast-API-Student-Management-System
 cd Fast-API-Student-Management-System
 
 # Initialize virtual environment
