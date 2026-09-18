@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta
 from typing import Optional
 from fastapi import HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -7,7 +6,7 @@ from jose import jwt, JWTError
 from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-
+from datetime import datetime, timedelta, timezone
 from app.database import get_db
 from app.students.models import Student
 
@@ -37,9 +36,9 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
     """Generates a signed JWT token containing user identity claims."""
     to_encode = data.copy()
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+       expire = datetime.now(timezone.utc) + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+       expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)

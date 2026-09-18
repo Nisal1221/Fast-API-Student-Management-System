@@ -1,8 +1,9 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table, Column
 
 from sqlalchemy.orm import relationship
-from datetime import datetime
 from app.database import Base
+from datetime import datetime, timezone
+from sqlalchemy import Column, DateTime, Integer, String, Table, ForeignKey
 
 # ==========================================
 # 1. ASSOCIATION (LINK) TABLE
@@ -24,6 +25,7 @@ student_course_association = Table(
 class Student(Base):
     __tablename__ = "students"
     
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     id = Column(Integer, primary_key=True, index=True) 
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=False)
